@@ -1,30 +1,39 @@
 package webapp.resource;
 
 import com.codahale.metrics.annotation.Timed;
+import webapp.VitalSign.VitalSign;
+import webapp.VitalSign.VitalSignStore;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.concurrent.atomic.AtomicLong;
+import javax.ws.rs.core.Response;
+import java.util.UUID;
 
-@Path("/hello-world")
+@Path("/health")
 @Produces(MediaType.APPLICATION_JSON)
 public class WebApplicationResource {
-
-    private final AtomicLong counter;
-
-    public WebApplicationResource() {
-        this.counter = new AtomicLong();
+    private VitalSignStore vitalSignStore;
+    public WebApplicationResource(VitalSignStore vitalSignStore) {
+        this.vitalSignStore = vitalSignStore;
     }
 
-    public WebApplicationResource(AtomicLong counter) {
-        this.counter = counter;
+    @POST
+    @Timed
+    @Path("vitalsign")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addVitalSign(VitalSignViewObject vitalSignViewObject) {
+        VitalSign vitalSign = new VitalSign(vitalSignViewObject.energy(),
+                vitalSignViewObject.smokingUrge(),
+                vitalSignViewObject.didYouSmoke());
+        UUID id = this.vitalSignStore.add(vitalSign);
+        return Response.ok().entity(id).build();
     }
 
     @GET
     @Timed
-    public Long sayHello() {
-        return counter.incrementAndGet();
+    @Path("vitalsign")
+    public Response getVitalSigns() {
+        return Response.ok().entity(this.vitalSignStore.getAllVitalSigns().toString()).build();
     }
+
 }

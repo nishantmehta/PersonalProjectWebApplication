@@ -4,6 +4,7 @@ import com.codahale.metrics.health.HealthCheck;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import webapp.VitalSign.MemoryVitalSignStore;
 import webapp.config.WebApplicationConfig;
 import webapp.resource.WebApplicationResource;
 
@@ -25,7 +26,7 @@ public class WebApplicationMain extends Application<WebApplicationConfig> {
     @Override
     public void run(WebApplicationConfig configuration,
                     Environment environment) {
-        final WebApplicationResource resource = new WebApplicationResource();
+        final WebApplicationResource resource = new WebApplicationResource(new MemoryVitalSignStore());
         environment.jersey().register(resource);
         environment.healthChecks().register("template", new HealthCheck() {
             @Override
