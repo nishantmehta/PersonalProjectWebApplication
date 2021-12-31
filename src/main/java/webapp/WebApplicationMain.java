@@ -2,6 +2,7 @@ package webapp;
 
 import com.codahale.metrics.health.HealthCheck;
 import io.dropwizard.Application;
+import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import webapp.VitalSign.MemoryVitalSignStore;
@@ -20,7 +21,8 @@ public class WebApplicationMain extends Application<WebApplicationConfig> {
 
     @Override
     public void initialize(Bootstrap<WebApplicationConfig> bootstrap) {
-        // nothing to do yet
+        bootstrap.addBundle(new AssetsBundle("/assets/", "/static/"));
+
     }
 
     @Override
@@ -34,6 +36,7 @@ public class WebApplicationMain extends Application<WebApplicationConfig> {
                 return Result.healthy();
             }
         });
+
     }
 
 }
