@@ -1,0 +1,25 @@
+# Inspired from solr git ignore file
+
+# Gradle
+#    Ignore the generated local settings file.
+/gradle.properties
+.gradle/
+build/
+
+# IntelliJ IDEA
+/.idea/
+.run
+**/*.iml
+**/*.ipr
+**/*.iws
+out/
+#    IntelliJ creates this folder, ignore.
+/dev-tools/missing-doclet/out/
+
+.editorconfig
+
+# macOS
+.DS_Store
+
+# logs
+*.log
