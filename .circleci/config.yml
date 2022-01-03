@@ -29,4 +29,4 @@ jobs:
     steps:
       - checkout
       - run: pwd
-      - run: ./gradlew task
+      - run: ./gradlew tasks
