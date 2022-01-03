@@ -43,5 +43,5 @@ jobs:
           path: .
           region: AWS_REGION
           repo: personalwebsite
-          tag: "$CIRCLE_SHA1"     
+          tag: latest     
      
