@@ -8,7 +8,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
-import java.util.UUID;
 
 @Path("/health")
 @Produces(MediaType.APPLICATION_JSON)
@@ -25,8 +24,8 @@ public class WebApplicationResource {
     public Response addVitalSign(@FormParam("energy") int energy,
                                  @FormParam("smokingurge") int smokingUrge,
                                  @FormParam("didyousmoke") boolean didYouSmoke) {
-        VitalSign vitalSign = new VitalSign(energy, smokingUrge, didYouSmoke);
-        UUID id = this.vitalSignStore.add(vitalSign);
+        var vitalSign = new VitalSign(energy, smokingUrge, didYouSmoke);
+        var id = this.vitalSignStore.add(vitalSign);
         return Response.created(
                     UriBuilder.fromResource(WebApplicationResource.class)
                     .build("vitalsign", id.toString())

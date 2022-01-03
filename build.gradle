@@ -1,9 +1,10 @@
 plugins {
     id 'java'
     id 'application'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
-group 'org.example'
+group 'webapp'
 version '1.0-SNAPSHOT'
 
 repositories {
@@ -28,4 +29,19 @@ test {
 
 run {
     args = ['server', './config.yml']
+}
+
+
+shadowJar {
+    mergeServiceFiles()
+    exclude 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/*.SF'
+    manifest {
+        attributes 'Implementation-Title': rootProject.name
+        attributes 'Implementation-Version': rootProject.version
+        attributes 'Implementation-Vendor-Id': rootProject.group
+        attributes 'Built-By': InetAddress.localHost.hostName
+        attributes 'Created-By': 'Gradle ' + gradle.gradleVersion
+        attributes 'Main-Class': mainClassName
+    }
+    archiveName 'PersonalProjectWebApplication.jar'
 }
