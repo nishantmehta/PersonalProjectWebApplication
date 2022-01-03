@@ -1,15 +1,15 @@
 # Java Gradle CircleCI 2.0 configuration file
 # See: https://circleci.com/docs/2.0/language-java/
-version: 2
-
+version: 2.1
+orbs:
+  aws-ecr: circleci/aws-ecr@7.3.0
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 
 jobs:
   build:
-    orbs:
-      aws-ecr: circleci/aws-ecr@7.3.0
+
     parallelism: 4
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
