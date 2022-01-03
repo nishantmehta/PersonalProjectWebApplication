@@ -6,20 +6,7 @@ orbs:
   aws-ecr: circleci/aws-ecr@6.7.0
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
-workflows:
-  build_and_push_image:
-    jobs:
-      - build
-      - aws-ecr/build-and-push-image:
-          account-url: AWS_ECR_ACCOUNT_URL
-          aws-access-key-id: AWS_ACCESS_KEY_ID
-          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
-          create-repo: true
-          dockerfile: Dockerfile
-          path: .
-          region: AWS_REGION
-          repo: personalwebsite
-          tag: "$CIRCLE_SHA1"
+
 jobs:
   build:
     parallelism: 4
@@ -46,3 +33,18 @@ jobs:
       - checkout
       - setup_remote_docker
       - run: ./gradlew shadowjar
+
+workflows:
+  build_and_push_image:
+    jobs:
+      - build
+      - aws-ecr/build-and-push-image:
+          account-url: AWS_ECR_ACCOUNT_URL
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          create-repo: true
+          dockerfile: Dockerfile
+          path: .
+          region: AWS_REGION
+          repo: personalwebsite
+          tag: "$CIRCLE_SHA1"      
