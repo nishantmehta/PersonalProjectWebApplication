@@ -33,11 +33,6 @@ jobs:
       - checkout
       - setup_remote_docker
       - run: ./gradlew shadowjar
-
-workflows:
-  build_and_push_image:
-    jobs:
-      - build
       - aws-ecr/build-and-push-image:
           account-url: AWS_ECR_ACCOUNT_URL
           aws-access-key-id: AWS_ACCESS_KEY_ID
@@ -47,4 +42,5 @@ workflows:
           path: .
           region: AWS_REGION
           repo: personalwebsite
-          tag: "$CIRCLE_SHA1"      
+          tag: "$CIRCLE_SHA1"     
+     
