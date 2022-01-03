@@ -40,5 +40,4 @@ public class WebApplicationResource {
     public Response getVitalSigns() {
         return Response.ok().entity(this.vitalSignStore.getAllVitalSigns().toString()).build();
     }
-
 }
