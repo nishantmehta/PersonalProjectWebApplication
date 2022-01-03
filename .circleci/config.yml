@@ -2,6 +2,8 @@
 # See: https://circleci.com/docs/2.0/language-java/
 version: 2
 
+orbs:
+  aws-ecr: circleci/aws-ecr@6.7.0
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
@@ -30,6 +32,15 @@ jobs:
       - checkout
       - setup_remote_docker
       - run: ./gradlew shadowjar
-      - run: docker build -t app:v1 .
+      - aws-ecr/build-and-push-image:
+          account-url: AWS_ECR_ACCOUNT_URL
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          create-repo: true
+          dockerfile: Dockerfile
+          path: .
+          region: AWS_REGION
+          repo: personalwebsite
+          tag: "$CIRCLE_SHA1"
         
          
